@@ -14,7 +14,7 @@ type Date struct {
 
 type Dates []Date
 
-func NewDateFromStrWithFormat(str string, format string) (Date, error) {
+func NewDateFromStrWithFormat(format string, str string) (Date, error) {
 	t, err := time.Parse(format, str)
 	if err != nil {
 		return Date{}, err
@@ -32,7 +32,7 @@ func GetToday() Date {
 }
 
 func NewDateFromStr(str string) (Date, error) {
-	return NewDateFromStrWithFormat(str, dateStrFormat)
+	return NewDateFromStrWithFormat(dateStrFormat, str)
 }
 
 func (d *Date) UnmarshalJSON(data []byte) error {

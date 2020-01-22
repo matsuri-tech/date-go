@@ -67,7 +67,7 @@ func TestDate_MinusNDay(t *testing.T) {
 
 func TestNewDateFromStrWithFormat(t *testing.T) {
 	str := "12/12/2019"
-	date, err := NewDateFromStrWithFormat(str, "01/02/2006")
+	date, err := NewDateFromStrWithFormat("01/02/2006", str)
 	if err != nil {
 		t.Error(err)
 	}
@@ -79,7 +79,7 @@ func TestNewDateFromStrWithFormat(t *testing.T) {
 
 func TestNewDateFromStrWithFormat2(t *testing.T) {
 	str := "2019-12-12"
-	date, err := NewDateFromStrWithFormat(str, "2006-01-02")
+	date, err := NewDateFromStrWithFormat("2006-01-02", str)
 	if err != nil {
 		t.Error(err)
 	}
