@@ -85,8 +85,12 @@ func (d Date) DateDiff(other Date) int {
 	return int(duration.Hours() / 24)
 }
 
+func (d Date) ToStringWithFormat(format string) string {
+	return d.Format(format)
+}
+
 func (d Date) ToString() string {
-	return d.Format("2006-01-02")
+	return d.ToStringWithFormat(dateStrFormat)
 }
 
 // for sql driver
