@@ -14,6 +14,14 @@ type Date struct {
 
 type Dates []Date
 
+func NewDateFromStrWithFormat(format string, str string) (Date, error) {
+	t, err := time.Parse(format, str)
+	if err != nil {
+		return Date{}, err
+	}
+	return Date{t}, nil
+}
+
 func NewDate(year int, month time.Month, day int) Date {
 	return Date{time.Date(year, month, day, 0, 0, 0, 0, time.UTC)}
 }
@@ -24,11 +32,7 @@ func GetToday() Date {
 }
 
 func NewDateFromStr(str string) (Date, error) {
-	t, err := time.Parse(dateStrFormat, str)
-	if err != nil {
-		return Date{}, err
-	}
-	return Date{t}, nil
+	return NewDateFromStrWithFormat(dateStrFormat, str)
 }
 
 func (d *Date) UnmarshalJSON(data []byte) error {
@@ -81,8 +85,12 @@ func (d Date) DateDiff(other Date) int {
 	return int(duration.Hours() / 24)
 }
 
+func (d Date) ToStringWithFormat(format string) string {
+	return d.Format(format)
+}
+
 func (d Date) ToString() string {
-	return d.Format("2006-01-02")
+	return d.ToStringWithFormat(dateStrFormat)
 }
 
 // for sql driver
