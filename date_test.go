@@ -25,9 +25,61 @@ func TestNewDateFromStr2(t *testing.T) {
 	}
 }
 
+func TestDate_PlusNDay(t *testing.T) {
+	date := NewDate(2020, 1, 1)
+	expectedDate := NewDate(2020, 1, 2)
+	if !reflect.DeepEqual(date.PlusNDay(1), expectedDate) {
+		t.Error(date)
+	}
+
+	date = NewDate(2020, 2, 29)
+	expectedDate = NewDate(2020, 3, 1)
+	if !reflect.DeepEqual(date.PlusNDay(1), expectedDate) {
+		t.Error(date)
+	}
+
+	date = NewDate(2019, 2, 28)
+	expectedDate = NewDate(2019, 3, 1)
+	if !reflect.DeepEqual(date.PlusNDay(1), expectedDate) {
+		t.Error(date)
+	}
+}
+
+func TestDate_MinusNDay(t *testing.T) {
+	date := NewDate(2020, 1, 3)
+	expectedDate := NewDate(2020, 1, 2)
+	if !reflect.DeepEqual(date.MinusNDay(1), expectedDate) {
+		t.Error(date)
+	}
+
+	date = NewDate(2020, 3, 1)
+	expectedDate = NewDate(2020, 2, 29)
+	if !reflect.DeepEqual(date.MinusNDay(1), expectedDate) {
+		t.Error(date)
+	}
+
+	date = NewDate(2019, 3, 1)
+	expectedDate = NewDate(2019, 2, 28)
+	if !reflect.DeepEqual(date.MinusNDay(1), expectedDate) {
+		t.Error(date)
+	}
+}
+
 func TestNewDateFromStrWithFormat(t *testing.T) {
 	str := "12/12/2019"
 	date, err := NewDateFromStrWithFormat(str, "01/02/2006")
+	if err != nil {
+		t.Error(err)
+	}
+	expectedDate := NewDate(2019, 12, 12)
+	if !reflect.DeepEqual(date, expectedDate) {
+		t.Error(date, expectedDate)
+	}
+}
+
+func TestNewDateFromStrWithFormat2(t *testing.T) {
+	str := "2019-12-12"
+	date, err := NewDateFromStrWithFormat(str, "2006-01-02")
 	if err != nil {
 		t.Error(err)
 	}
