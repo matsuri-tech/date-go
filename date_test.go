@@ -1,8 +1,41 @@
 package mdate
 
 import (
+	"reflect"
 	"testing"
 )
+
+func TestNewDateFromStr(t *testing.T) {
+	str := "2019-12-12"
+	date, err := NewDateFromStr(str)
+	if err != nil {
+		t.Error(err)
+	}
+	expectedDate := NewDate(2019, 12, 12)
+	if !reflect.DeepEqual(date, expectedDate) {
+		t.Error(date, expectedDate)
+	}
+}
+
+func TestNewDateFromStr2(t *testing.T) {
+	str := "12/12/2019"
+	date, err := NewDateFromStr(str)
+	if err == nil {
+		t.Error(date)
+	}
+}
+
+func TestNewDateFromStrWithFormat(t *testing.T) {
+	str := "12/12/2019"
+	date, err := NewDateFromStrWithFormat(str, "01/02/2006")
+	if err != nil {
+		t.Error(err)
+	}
+	expectedDate := NewDate(2019, 12, 12)
+	if !reflect.DeepEqual(date, expectedDate) {
+		t.Error(date, expectedDate)
+	}
+}
 
 func TestDateDiff(t *testing.T) {
 	d1 := NewDate(2018, 10, 11)
