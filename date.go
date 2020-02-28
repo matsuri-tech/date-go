@@ -22,6 +22,14 @@ func NewDateFromStrWithFormat(format string, str string) (Date, error) {
 	return Date{t}, nil
 }
 
+func MustNewDateFromStrWithFormat(format string, str string) Date {
+	t, err := time.Parse(format, str)
+	if err != nil {
+		panic(err)
+	}
+	return Date{t}
+}
+
 func NewDate(year int, month time.Month, day int) Date {
 	return Date{time.Date(year, month, day, 0, 0, 0, 0, time.UTC)}
 }
@@ -33,6 +41,10 @@ func GetToday() Date {
 
 func NewDateFromStr(str string) (Date, error) {
 	return NewDateFromStrWithFormat(dateStrFormat, str)
+}
+
+func MustNewDateFromStr(str string) Date {
+	return MustNewDateFromStrWithFormat(dateStrFormat, str)
 }
 
 func (d *Date) UnmarshalJSON(data []byte) error {
