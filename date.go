@@ -123,3 +123,10 @@ func (d Dates) Swap(i, j int) {
 func (d Dates) Less(i, j int) bool {
 	return d[i].IsEarlierEq(d[j])
 }
+
+func (d Date) JapanFiscalYear() JapanFiscalYear {
+	if d.Month() <= 3 {
+		return JapanFiscalYear(d.Year() - 1)
+	}
+	return JapanFiscalYear(d.Year())
+}
