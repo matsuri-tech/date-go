@@ -169,3 +169,25 @@ func TestDate_IsNextDay_False(t *testing.T) {
 		}
 	}
 }
+
+func TestDate_JapanFiscalYear(t *testing.T) {
+	tests := []struct {
+		in   Date
+		want JapanFiscalYear
+	}{
+		{
+			in:   NewDate(2020, 1, 2),
+			want: 2019,
+		},
+		{
+			in:   NewDate(2020, 5, 6),
+			want: 2020,
+		},
+	}
+
+	for _, tt := range tests {
+		if tt.in.JapanFiscalYear() != tt.want {
+			t.Error(tt)
+		}
+	}
+}
