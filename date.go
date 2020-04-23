@@ -35,6 +35,14 @@ func NewDateFromStr(str string) (Date, error) {
 	return NewDateFromStrWithFormat(dateStrFormat, str)
 }
 
+func MustDateFromStr(str string) Date {
+	date, err := NewDateFromStr(str)
+	if err != nil {
+		panic(err)
+	}
+	return date
+}
+
 func (d *Date) UnmarshalJSON(data []byte) error {
 	t, err := time.Parse("\"2006-01-02\"", string(data))
 	*d = Date{t}
