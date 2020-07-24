@@ -1,6 +1,7 @@
 package mdate
 
 import (
+	"encoding/json"
 	"reflect"
 	"testing"
 )
@@ -188,6 +189,32 @@ func TestDate_JapanFiscalYear(t *testing.T) {
 	for _, tt := range tests {
 		if tt.in.JapanFiscalYear() != tt.want {
 			t.Error(tt)
+		}
+	}
+}
+
+func TestDate_MarshalJSON(t *testing.T) {
+
+	type Sample struct {
+		D Date `json:"d"`
+	}
+
+	tests := []struct {
+		in   Sample
+		want string
+	}{
+		{
+			in:   Sample{D: NewDate(2020, 2, 2)},
+			want: `{"d":"2020-02-02"}`,
+		},
+	}
+	for _, tt := range tests {
+		b, err := json.Marshal(tt.in)
+		if err != nil {
+			t.Error(err)
+		}
+		if tt.want != string(b) {
+			t.Error(string(b), tt.want)
 		}
 	}
 }

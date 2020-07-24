@@ -49,8 +49,8 @@ func (d *Date) UnmarshalJSON(data []byte) error {
 	return err
 }
 
-func (d *Date) MarshalJSON() ([]byte, error) {
-	return json.Marshal(d.Format("2006-01-02"))
+func (d Date) MarshalJSON() ([]byte, error) {
+	return json.Marshal(d.String())
 }
 
 func (d Date) PlusNDay(n int) Date {
@@ -97,7 +97,7 @@ func (d Date) ToStringWithFormat(format string) string {
 	return d.Format(format)
 }
 
-func (d Date) ToString() string {
+func (d Date) String() string {
 	return d.ToStringWithFormat(dateStrFormat)
 }
 
@@ -115,7 +115,7 @@ func (d Date) Value() (driver.Value, error) {
 func (dates Dates) ToStringArray() []string {
 	ret := []string{}
 	for _, date := range dates {
-		ret = append(ret, date.ToString())
+		ret = append(ret, date.String())
 	}
 	return ret
 }
