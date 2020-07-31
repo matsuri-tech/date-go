@@ -109,6 +109,18 @@ func TestYearMonthDiff(t *testing.T) {
 				},
 			},
 		},
+		{
+			in: in{
+				"",
+				MustDateSpan(NewDate(2019, 11, 1), NewDate(2019, 11, 1)),
+			},
+			want: YearMonths{
+				YearMonth{
+					Year:  2019,
+					Month: 11,
+				},
+			},
+		},
 	}
 
 	for _, tt := range tests {
