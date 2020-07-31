@@ -2,8 +2,6 @@ package mdate
 
 import "github.com/matsuri-tech/common-error-go"
 
-type Year int
-
 type Month int
 
 type YearMonth struct {
@@ -31,10 +29,6 @@ func NewMonth(m int) (Month, error) {
 		return Month(1), InvalidMonth()
 	}
 	return Month(m), nil
-}
-
-func NewYear(y int) Year {
-	return Year(y)
 }
 
 func NewYearMonth(year Year, month Month) YearMonth {
