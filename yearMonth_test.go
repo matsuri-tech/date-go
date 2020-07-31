@@ -42,7 +42,7 @@ func TestYearMonth_NextMonth(t *testing.T) {
 	}
 }
 
-func TestYearMonthDiff(t *testing.T) {
+func TestOverlappingYearMonth(t *testing.T) {
 
 	type in struct {
 		okimochi string
@@ -109,10 +109,22 @@ func TestYearMonthDiff(t *testing.T) {
 				},
 			},
 		},
+		{
+			in: in{
+				"",
+				MustDateSpan(NewDate(2019, 11, 1), NewDate(2019, 11, 1)),
+			},
+			want: YearMonths{
+				YearMonth{
+					Year:  2019,
+					Month: 11,
+				},
+			},
+		},
 	}
 
 	for _, tt := range tests {
-		result := YearMonthDiff(tt.in.span)
+		result := OverlappingYearMonth(tt.in.span)
 		if !reflect.DeepEqual(result, tt.want) {
 			t.Error(result, tt.want)
 		}
