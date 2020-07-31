@@ -138,3 +138,17 @@ func (d Date) JapanFiscalYear() JapanFiscalYear {
 	}
 	return JapanFiscalYear(d.Year())
 }
+
+func (d Date) Year() Year {
+	y, _, _ := d.Date()
+	return Year(y)
+}
+
+func (d Date) Month() Month {
+	_, m, _ := d.Date()
+	return Month(m)
+}
+
+func (d Date) YearMonth() YearMonth {
+	return NewYearMonth(d.Year(), d.Month())
+}
