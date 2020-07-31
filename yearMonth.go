@@ -48,7 +48,7 @@ func NewYearMonth(year Year, month Month) YearMonth {
 	}
 }
 
-func YearMonthDiff(span DateSpan) YearMonths {
+func OverlappingYearMonth(span DateSpan) YearMonths {
 	var result YearMonths
 	var currentYearMonth = NewYearMonth(span.StartDate.Year(), span.StartDate.Month())
 	for {
