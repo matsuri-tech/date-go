@@ -45,8 +45,8 @@ func TestYearMonth_NextMonth(t *testing.T) {
 func TestYearMonthDiff(t *testing.T) {
 
 	type in struct {
-		start Date
-		end   Date
+		okimochi string
+		span     DateSpan
 	}
 
 	tests := []struct {
@@ -55,8 +55,8 @@ func TestYearMonthDiff(t *testing.T) {
 	}{
 		{
 			in: in{
-				start: NewDate(2020, 1, 1),
-				end:   NewDate(2020, 5, 25),
+				"",
+				MustDateSpan(NewDate(2020, 1, 1), NewDate(2020, 5, 25)),
 			},
 			want: YearMonths{
 				YearMonth{
@@ -83,8 +83,8 @@ func TestYearMonthDiff(t *testing.T) {
 		},
 		{
 			in: in{
-				start: NewDate(2019, 11, 1),
-				end:   NewDate(2020, 3, 25),
+				"",
+				MustDateSpan(NewDate(2019, 11, 1), NewDate(2020, 3, 25)),
 			},
 			want: YearMonths{
 				YearMonth{
@@ -112,7 +112,7 @@ func TestYearMonthDiff(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		result := YearMonthDiff(tt.in.start, tt.in.end)
+		result := YearMonthDiff(tt.in.span)
 		if !reflect.DeepEqual(result, tt.want) {
 			t.Error(result, tt.want)
 		}
@@ -165,6 +165,74 @@ func TestNewMonth(t *testing.T) {
 		}
 		if result != tt.want.Month {
 			t.Error(result, tt.want.Month)
+		}
+	}
+}
+
+func TestYearMonth_IsAfter(t *testing.T) {
+	type in struct {
+		ym1 YearMonth
+		ym2 YearMonth
+	}
+
+	tests := []struct {
+		in   in
+		want bool
+	}{
+		{
+			in: in{
+				ym1: YearMonth{
+					Year:  2020,
+					Month: 1,
+				},
+				ym2: YearMonth{
+					Year:  2020,
+					Month: 2,
+				}},
+			want: false,
+		},
+		{
+			in: in{
+				ym1: YearMonth{
+					Year:  2019,
+					Month: 12,
+				},
+				ym2: YearMonth{
+					Year:  2020,
+					Month: 2,
+				}},
+			want: false,
+		},
+		{
+			in: in{
+				ym1: YearMonth{
+					Year:  2020,
+					Month: 12,
+				},
+				ym2: YearMonth{
+					Year:  2019,
+					Month: 2,
+				}},
+			want: true,
+		},
+		{
+			in: in{
+				ym1: YearMonth{
+					Year:  2019,
+					Month: 12,
+				},
+				ym2: YearMonth{
+					Year:  2019,
+					Month: 12,
+				}},
+			want: false,
+		},
+	}
+
+	for _, tt := range tests {
+		result := tt.in.ym1.IsAfter(tt.in.ym2)
+		if result != tt.want {
+			t.Error(result, tt.want)
 		}
 	}
 }

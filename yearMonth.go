@@ -48,14 +48,14 @@ func NewYearMonth(year Year, month Month) YearMonth {
 	}
 }
 
-func YearMonthDiff(start Date, end Date) YearMonths {
+func YearMonthDiff(span DateSpan) YearMonths {
 	var result YearMonths
-	var currentYearMonth = NewYearMonth(start.Year(), start.Month())
+	var currentYearMonth = NewYearMonth(span.StartDate.Year(), span.StartDate.Month())
 	for {
-		result = append(result, currentYearMonth)
-		if currentYearMonth == end.YearMonth() {
+		if currentYearMonth.IsAfter(span.EndDate.YearMonth()) {
 			break
 		}
+		result = append(result, currentYearMonth)
 		currentYearMonth = currentYearMonth.NextMonth()
 	}
 	return result
@@ -72,4 +72,14 @@ func (ym YearMonth) NextMonth() YearMonth {
 		Year:  ym.Year,
 		Month: ym.Month + 1,
 	}
+}
+
+func (ym YearMonth) IsAfter(another YearMonth) bool {
+	if ym.Year > another.Year {
+		return true
+	}
+	if ym.Year < another.Year {
+		return false
+	}
+	return ym.Month > another.Month
 }
