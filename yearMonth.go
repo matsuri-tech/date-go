@@ -13,6 +13,7 @@ type YearMonths []YearMonth
 
 const (
 	January  Month = 1
+	August   Month = 8
 	December Month = 12
 )
 
@@ -25,8 +26,8 @@ func InvalidMonth() merrors.CommonError {
 }
 
 func NewMonth(m int) (Month, error) {
-	if m < 1 || m > 12 {
-		return Month(1), InvalidMonth()
+	if m < int(January) || m > int(December) {
+		return Month(0), InvalidMonth()
 	}
 	return Month(m), nil
 }
