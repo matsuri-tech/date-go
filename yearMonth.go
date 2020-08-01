@@ -1,6 +1,9 @@
 package mdate
 
-import "github.com/matsuri-tech/common-error-go"
+import (
+	"github.com/matsuri-tech/common-error-go"
+	"time"
+)
 
 type Month int
 
@@ -82,4 +85,13 @@ func (ym YearMonth) IsAfter(another YearMonth) bool {
 		return false
 	}
 	return ym.Month > another.Month
+}
+
+func (ym YearMonth) StartDate() Date {
+	return NewDate(int(ym.Year), time.Month(ym.Month), 1)
+}
+
+func (ym YearMonth) EndDate() Date {
+	nextYm := ym.NextMonth()
+	return nextYm.StartDate().MinusNDay(1)
 }
