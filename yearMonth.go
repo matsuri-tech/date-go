@@ -51,19 +51,6 @@ func NewYearMonth(year Year, month Month) YearMonth {
 	}
 }
 
-func OverlappingYearMonth(span DateSpan) YearMonths {
-	var result YearMonths
-	var currentYearMonth = NewYearMonth(span.StartDate.Year(), span.StartDate.Month())
-	for {
-		if currentYearMonth.IsAfter(span.EndDate.YearMonth()) {
-			break
-		}
-		result = append(result, currentYearMonth)
-		currentYearMonth = currentYearMonth.NextMonth()
-	}
-	return result
-}
-
 func (ym YearMonth) NextMonth() YearMonth {
 	if ym.Month == December {
 		return YearMonth{

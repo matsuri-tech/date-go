@@ -160,3 +160,92 @@ func TestDateSpan_GetDateList(t *testing.T) {
 		}
 	}
 }
+
+func TestDateSpan_OverlappingYearMonth(t *testing.T) {
+
+	type in struct {
+		okimochi string
+		span     DateSpan
+	}
+
+	tests := []struct {
+		in   in
+		want YearMonths
+	}{
+		{
+			in: in{
+				"",
+				MustDateSpan(NewDate(2020, 1, 1), NewDate(2020, 5, 25)),
+			},
+			want: YearMonths{
+				YearMonth{
+					Year:  2020,
+					Month: 1,
+				},
+				YearMonth{
+					Year:  2020,
+					Month: 2,
+				},
+				YearMonth{
+					Year:  2020,
+					Month: 3,
+				},
+				YearMonth{
+					Year:  2020,
+					Month: 4,
+				},
+				YearMonth{
+					Year:  2020,
+					Month: 5,
+				},
+			},
+		},
+		{
+			in: in{
+				"",
+				MustDateSpan(NewDate(2019, 11, 1), NewDate(2020, 3, 25)),
+			},
+			want: YearMonths{
+				YearMonth{
+					Year:  2019,
+					Month: 11,
+				},
+				YearMonth{
+					Year:  2019,
+					Month: 12,
+				},
+				YearMonth{
+					Year:  2020,
+					Month: 1,
+				},
+				YearMonth{
+					Year:  2020,
+					Month: 2,
+				},
+				YearMonth{
+					Year:  2020,
+					Month: 3,
+				},
+			},
+		},
+		{
+			in: in{
+				"",
+				MustDateSpan(NewDate(2019, 11, 1), NewDate(2019, 11, 1)),
+			},
+			want: YearMonths{
+				YearMonth{
+					Year:  2019,
+					Month: 11,
+				},
+			},
+		},
+	}
+
+	for _, tt := range tests {
+		result := tt.in.span.OverlappingYearMonth()
+		if !reflect.DeepEqual(result, tt.want) {
+			t.Error(result, tt.want)
+		}
+	}
+}
