@@ -122,3 +122,16 @@ func (s DateSpansSlice) Merge() DateSpans {
 	}
 	return result.Merge()
 }
+
+func (s DateSpan) OverlappingYearMonth() YearMonths {
+	var result YearMonths
+	var currentYearMonth = NewYearMonth(s.StartDate.Year(), s.StartDate.Month())
+	for {
+		if currentYearMonth.IsAfter(s.EndDate.YearMonth()) {
+			break
+		}
+		result = append(result, currentYearMonth)
+		currentYearMonth = currentYearMonth.NextMonth()
+	}
+	return result
+}

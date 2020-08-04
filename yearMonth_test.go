@@ -2,7 +2,6 @@ package mdate
 
 import (
 	"github.com/matsuri-tech/common-error-go"
-	"reflect"
 	"testing"
 )
 
@@ -37,95 +36,6 @@ func TestYearMonth_NextMonth(t *testing.T) {
 	for _, tt := range tests {
 		result := tt.in.NextMonth()
 		if result != tt.want {
-			t.Error(result, tt.want)
-		}
-	}
-}
-
-func TestOverlappingYearMonth(t *testing.T) {
-
-	type in struct {
-		okimochi string
-		span     DateSpan
-	}
-
-	tests := []struct {
-		in   in
-		want YearMonths
-	}{
-		{
-			in: in{
-				"",
-				MustDateSpan(NewDate(2020, 1, 1), NewDate(2020, 5, 25)),
-			},
-			want: YearMonths{
-				YearMonth{
-					Year:  2020,
-					Month: 1,
-				},
-				YearMonth{
-					Year:  2020,
-					Month: 2,
-				},
-				YearMonth{
-					Year:  2020,
-					Month: 3,
-				},
-				YearMonth{
-					Year:  2020,
-					Month: 4,
-				},
-				YearMonth{
-					Year:  2020,
-					Month: 5,
-				},
-			},
-		},
-		{
-			in: in{
-				"",
-				MustDateSpan(NewDate(2019, 11, 1), NewDate(2020, 3, 25)),
-			},
-			want: YearMonths{
-				YearMonth{
-					Year:  2019,
-					Month: 11,
-				},
-				YearMonth{
-					Year:  2019,
-					Month: 12,
-				},
-				YearMonth{
-					Year:  2020,
-					Month: 1,
-				},
-				YearMonth{
-					Year:  2020,
-					Month: 2,
-				},
-				YearMonth{
-					Year:  2020,
-					Month: 3,
-				},
-			},
-		},
-		{
-			in: in{
-				"",
-				MustDateSpan(NewDate(2019, 11, 1), NewDate(2019, 11, 1)),
-			},
-			want: YearMonths{
-				YearMonth{
-					Year:  2019,
-					Month: 11,
-				},
-			},
-		},
-	}
-
-	for _, tt := range tests {
-		result := OverlappingYearMonth(tt.in.span)
-		if !reflect.DeepEqual(result, tt.want) {
 			t.Error(result, tt.want)
 		}
 	}
@@ -243,6 +153,92 @@ func TestYearMonth_IsAfter(t *testing.T) {
 
 	for _, tt := range tests {
 		result := tt.in.ym1.IsAfter(tt.in.ym2)
+		if result != tt.want {
+			t.Error(result, tt.want)
+		}
+	}
+}
+
+func TestYearMonth_StartDate(t *testing.T) {
+	tests := []struct {
+		in   YearMonth
+		want Date
+	}{
+		{
+			in: YearMonth{
+				Year:  2020,
+				Month: 1,
+			},
+			want: NewDate(2020, 1, 1),
+		},
+		{
+			in: YearMonth{
+				Year:  2019,
+				Month: 12,
+			},
+			want: NewDate(2019, 12, 1),
+		},
+		{
+			in: YearMonth{
+				Year:  2020,
+				Month: 2,
+			},
+			want: NewDate(2020, 2, 1),
+		},
+	}
+
+	for _, tt := range tests {
+		result := tt.in.StartDate()
+		if result != tt.want {
+			t.Error(result, tt.want)
+		}
+	}
+}
+
+func TestYearMonth_EndDate(t *testing.T) {
+	tests := []struct {
+		in   YearMonth
+		want Date
+	}{
+		{
+			in: YearMonth{
+				Year:  2020,
+				Month: 1,
+			},
+			want: NewDate(2020, 1, 31),
+		},
+		{
+			in: YearMonth{
+				Year:  2019,
+				Month: 12,
+			},
+			want: NewDate(2019, 12, 31),
+		},
+		{
+			in: YearMonth{
+				Year:  2020,
+				Month: 2,
+			},
+			want: NewDate(2020, 2, 29),
+		},
+		{
+			in: YearMonth{
+				Year:  2019,
+				Month: 2,
+			},
+			want: NewDate(2019, 2, 28),
+		},
+		{
+			in: YearMonth{
+				Year:  2019,
+				Month: 6,
+			},
+			want: NewDate(2019, 6, 30),
+		},
+	}
+
+	for _, tt := range tests {
+		result := tt.in.EndDate()
 		if result != tt.want {
 			t.Error(result, tt.want)
 		}
