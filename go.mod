@@ -1,4 +1,4 @@
-module github.com/matsuri-tech/date-go
+module github.com/matsuri-tech/date-go/v2
 
 go 1.13
 
