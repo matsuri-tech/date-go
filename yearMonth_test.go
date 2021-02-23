@@ -244,3 +244,33 @@ func TestYearMonth_EndDate(t *testing.T) {
 		}
 	}
 }
+
+func TestMonth_String(t *testing.T) {
+
+	tests := []struct {
+		in   YearMonth
+		want string
+	}{
+		{
+			in: YearMonth{
+				Year:  2021,
+				Month: 2,
+			},
+			want: "2021-02",
+		},
+		{
+			in: YearMonth{
+				Year:  2021,
+				Month: 12,
+			},
+			want: "2021-12",
+		},
+	}
+
+	for _, tt := range tests {
+		result := tt.in.String()
+		if result != tt.want {
+			t.Error(result, tt.want)
+		}
+	}
+}

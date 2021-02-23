@@ -1,7 +1,9 @@
 package mdate
 
 import (
-	"github.com/matsuri-tech/common-error-go"
+	"fmt"
+	merrors "github.com/matsuri-tech/common-error-go"
+	"strconv"
 	"time"
 )
 
@@ -81,4 +83,16 @@ func (ym YearMonth) StartDate() Date {
 func (ym YearMonth) EndDate() Date {
 	nextYm := ym.NextMonth()
 	return nextYm.StartDate().MinusNDay(1)
+}
+
+func (month Month) String() string {
+	monthStr := strconv.Itoa(int(month))
+	if month < 10 {
+		return fmt.Sprintf("0%v", monthStr)
+	}
+	return monthStr
+}
+
+func (ym YearMonth) String() string {
+	return fmt.Sprintf("%v-%v", ym.Year, ym.Month.String())
 }
