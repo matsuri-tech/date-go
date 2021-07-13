@@ -35,8 +35,8 @@ func NewDateFromStr(str string) (Date, error) {
 	return NewDateFromStrWithFormat(dateStrFormat, str)
 }
 
-func NewDateFromUnix(unixTime int64, nSec int64) Date {
-	return Date{Time: time.Unix(unixTime, nSec)}
+func NewDateFromUnix(unixTime int64) Date {
+	return Date{Time: time.Unix(unixTime, 0)}
 }
 
 func MustDateFromStr(str string) Date {
