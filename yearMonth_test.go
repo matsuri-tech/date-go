@@ -2,6 +2,7 @@ package mdate
 
 import (
 	"github.com/matsuri-tech/common-error-go"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
@@ -272,5 +273,36 @@ func TestMonth_String(t *testing.T) {
 		if result != tt.want {
 			t.Error(result, tt.want)
 		}
+	}
+}
+
+func TestYearMonth_NewFromString(t *testing.T) {
+	tests := []struct {
+		in      string
+		want    YearMonth
+		wantErr bool
+	}{
+		{
+			in:      "2021-01",
+			want:    YearMonth{2021, 1},
+			wantErr: false,
+		},
+		{
+			in:      "1980-12",
+			want:    YearMonth{1980, 12},
+			wantErr: false,
+		},
+		{
+			in:      "2000-24",
+			want:    YearMonth{},
+			wantErr: true,
+		},
+	}
+
+	for _, tt := range tests {
+		r, err := NewYearMonthFromStr(tt.in)
+
+		assert.Equal(t, tt.wantErr, err != nil, "%v, %v", tt.in, err)
+		assert.Equal(t, tt.want, r, "%v", tt.in)
 	}
 }
