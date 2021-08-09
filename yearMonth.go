@@ -96,3 +96,17 @@ func (month Month) String() string {
 func (ym YearMonth) String() string {
 	return fmt.Sprintf("%v-%v", ym.Year, ym.Month.String())
 }
+
+const yearMonthStrFormat = "2006-01"
+
+func NewYearMonthFromStr(str string) (YearMonth, error) {
+	t, err := time.Parse(yearMonthStrFormat, str)
+	if err != nil {
+		return YearMonth{}, err
+	}
+
+	y := NewYear(t.Year())
+	m := Month(t.Month())
+
+	return NewYearMonth(y, m), nil
+}
