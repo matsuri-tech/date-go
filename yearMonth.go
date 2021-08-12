@@ -10,8 +10,8 @@ import (
 type Month int
 
 type YearMonth struct {
-	Year  Year
-	Month Month
+	Year  Year  `json:"year"`
+	Month Month `json:"month"`
 }
 
 type YearMonths []YearMonth
