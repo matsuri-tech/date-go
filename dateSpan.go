@@ -156,5 +156,9 @@ func (s DateSpan) ClampDateSpan(other DateSpan) (DateSpan, error) {
 			rl = append(rl, targetDate)
 		}
 	}
-	return MustDateSpan(rl[0], rl[rl.Len()-1]), nil
+	result, err := NewDateSpan(rl[0], rl[rl.Len()-1])
+	if err != nil {
+		return DateSpan{}, err
+	}
+	return result, nil
 }
