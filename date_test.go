@@ -218,3 +218,34 @@ func TestDate_MarshalJSON(t *testing.T) {
 		}
 	}
 }
+
+func TestDate_MarshalJSONInKey(t *testing.T) {
+	type Sample map[Date]Date
+	day1, err := NewDateFromStr("2022-01-01")
+	if err != nil {
+		t.Errorf("error: %v", err)
+	}
+	tests := []struct {
+		caseName string
+		in       Sample
+		want     []byte
+	}{
+		{
+			caseName: "simple",
+			in: Sample{
+				day1: day1,
+			},
+			want: []byte("{\"2022-01-01\": \"2022-01-01\"}"),
+		},
+	}
+
+	for _, tt := range tests {
+		s, err := json.Marshal(tt.in)
+		if err != nil {
+			t.Errorf("caseName: %v, err occurs in Marshal. err: %v", tt.caseName, err)
+		}
+		if !reflect.DeepEqual(s, tt.want) {
+			t.Errorf("caseName: %v, result: %v, expected: %v", tt.caseName, string(s), string(tt.want))
+		}
+	}
+}
