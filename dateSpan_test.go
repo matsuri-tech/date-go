@@ -287,10 +287,19 @@ func TestClampDateSpan(t *testing.T) {
 			expectedErr: nil,
 		},
 		{
-			caseName: "no overlapped",
+			caseName: "no overlapped before",
 			in: DateSpanList{
 				a: MustDateSpan(NewDate(2021, 3, 10), NewDate(2021, 4, 20)),
 				b: MustDateSpan(NewDate(2021, 5, 1), NewDate(2022, 3, 31)),
+			},
+			want:        DateSpan{},
+			expectedErr: NoOverlapToClamp(),
+		},
+		{
+			caseName: "no overlapped after",
+			in: DateSpanList{
+				a: MustDateSpan(NewDate(2021, 5, 1), NewDate(2022, 3, 31)),
+				b: MustDateSpan(NewDate(2021, 3, 10), NewDate(2021, 4, 20)),
 			},
 			want:        DateSpan{},
 			expectedErr: NoOverlapToClamp(),
@@ -315,6 +324,30 @@ func TestClampDateSpan(t *testing.T) {
 			},
 			want: DateSpan{
 				StartDate: NewDate(2022, 3, 31),
+				EndDate:   NewDate(2022, 3, 31),
+			},
+			expectedErr: nil,
+		},
+		{
+			caseName: "included all",
+			in: DateSpanList{
+				a: MustDateSpan(NewDate(2021, 4, 1), NewDate(2022, 3, 31)),
+				b: MustDateSpan(NewDate(2021, 3, 1), NewDate(2022, 4, 30)),
+			},
+			want: DateSpan{
+				StartDate: NewDate(2021, 4, 1),
+				EndDate:   NewDate(2022, 3, 31),
+			},
+			expectedErr: nil,
+		},
+		{
+			caseName: "includes all",
+			in: DateSpanList{
+				a: MustDateSpan(NewDate(2021, 3, 1), NewDate(2022, 4, 30)),
+				b: MustDateSpan(NewDate(2021, 4, 1), NewDate(2022, 3, 31)),
+			},
+			want: DateSpan{
+				StartDate: NewDate(2021, 4, 1),
 				EndDate:   NewDate(2022, 3, 31),
 			},
 			expectedErr: nil,
