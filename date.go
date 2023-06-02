@@ -57,6 +57,10 @@ func (d Date) MarshalJSON() ([]byte, error) {
 	return json.Marshal(d.String())
 }
 
+func (d Date) MarshalText() (text []byte, err error) {
+	return []byte(d.String()), nil
+}
+
 func (d Date) PlusNDay(n int) Date {
 	return Date{d.AddDate(0, 0, n)}
 }
