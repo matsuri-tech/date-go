@@ -295,6 +295,30 @@ func TestClampDateSpan(t *testing.T) {
 			want:        DateSpan{},
 			expectedErr: NoOverlapToClamp(),
 		},
+		{
+			caseName: "matched perfectly",
+			in: DateSpanList{
+				a: MustDateSpan(NewDate(2021, 4, 1), NewDate(2022, 3, 31)),
+				b: MustDateSpan(NewDate(2021, 4, 1), NewDate(2022, 3, 31)),
+			},
+			want: DateSpan{
+				StartDate: NewDate(2021, 4, 1),
+				EndDate:   NewDate(2022, 3, 31),
+			},
+			expectedErr: nil,
+		},
+		{
+			caseName: "only last day match",
+			in: DateSpanList{
+				a: MustDateSpan(NewDate(2021, 4, 1), NewDate(2022, 3, 31)),
+				b: MustDateSpan(NewDate(2022, 3, 31), NewDate(2022, 4, 1)),
+			},
+			want: DateSpan{
+				StartDate: NewDate(2022, 3, 31),
+				EndDate:   NewDate(2022, 3, 31),
+			},
+			expectedErr: nil,
+		},
 	}
 
 	for _, tt := range tests {
@@ -306,7 +330,7 @@ func TestClampDateSpan(t *testing.T) {
 		}
 
 		if !reflect.DeepEqual(result, tt.want) {
-			t.Errorf("result: %v, expected: %v", result, tt.want)
+			t.Errorf("caseName: %v, result: %v, expected: %v", tt.caseName, result, tt.want)
 		}
 
 	}
