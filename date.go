@@ -97,12 +97,12 @@ func (d Date) DateDiff(other Date) int {
 	return int(duration.Hours() / 24)
 }
 
-func (d Date) ToStringWithFormat(format string) string {
+func (d Date) StringWithFormat(format string) string {
 	return d.Format(format)
 }
 
 func (d Date) String() string {
-	return d.ToStringWithFormat(dateStrFormat)
+	return d.StringWithFormat(dateStrFormat)
 }
 
 // for sql driver
@@ -116,7 +116,7 @@ func (d Date) Value() (driver.Value, error) {
 	return d.Time, nil
 }
 
-func (dates Dates) ToStringArray() []string {
+func (dates Dates) StringArray() []string {
 	ret := []string{}
 	for _, date := range dates {
 		ret = append(ret, date.String())
