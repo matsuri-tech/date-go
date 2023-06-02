@@ -147,16 +147,21 @@ func (s DateSpan) ClampDateSpan(other DateSpan) (DateSpan, error) {
 		return DateSpan{}, NoOverlapToClamp()
 	}
 
-	max := s.StartDate.DateDiff(s.EndDate)
-	rl := Dates{}
-	// for文で1つずつチェックしているので、結果をsortしなくて良い。
-	for i := 0; i <= max; i++ {
-		targetDate := s.StartDate.PlusNDay(i)
-		if other.IncludesDate(targetDate) {
-			rl = append(rl, targetDate)
-		}
+	var newStart Date
+	if s.StartDate.IsEarlierEq(other.StartDate) {
+		newStart = other.StartDate
+	} else {
+		newStart = s.StartDate
 	}
-	result, err := NewDateSpan(rl[0], rl[rl.Len()-1])
+
+	var newEnd Date
+	if s.EndDate.IsEarlierEq(other.EndDate) {
+		newEnd = s.EndDate
+	} else {
+		newEnd = other.EndDate
+	}
+
+	result, err := NewDateSpan(newStart, newEnd)
 	if err != nil {
 		return DateSpan{}, err
 	}
