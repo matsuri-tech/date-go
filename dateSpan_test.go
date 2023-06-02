@@ -2,6 +2,7 @@ package mdate
 
 import (
 	"fmt"
+	merrors "github.com/matsuri-tech/common-error-go"
 	"reflect"
 	"testing"
 )
@@ -247,5 +248,66 @@ func TestDateSpan_OverlappingYearMonth(t *testing.T) {
 		if !reflect.DeepEqual(result, tt.want) {
 			t.Error(result, tt.want)
 		}
+	}
+}
+
+func TestClampDateSpan(t *testing.T) {
+	type DateSpanList struct {
+		a DateSpan
+		b DateSpan
+	}
+	tests := []struct {
+		caseName    string
+		in          DateSpanList
+		want        DateSpan
+		expectedErr error
+	}{
+		{
+			caseName: "simple",
+			in: DateSpanList{
+				a: MustDateSpan(NewDate(2021, 3, 10), NewDate(2021, 4, 20)),
+				b: MustDateSpan(NewDate(2021, 4, 1), NewDate(2022, 3, 31)),
+			},
+			want: DateSpan{
+				StartDate: NewDate(2021, 4, 1),
+				EndDate:   NewDate(2021, 4, 20),
+			},
+			expectedErr: nil,
+		},
+		{
+			caseName: "reverse of simple",
+			in: DateSpanList{
+				a: MustDateSpan(NewDate(2021, 4, 1), NewDate(2022, 3, 31)),
+				b: MustDateSpan(NewDate(2021, 3, 10), NewDate(2021, 4, 20)),
+			},
+			want: DateSpan{
+				StartDate: NewDate(2021, 4, 1),
+				EndDate:   NewDate(2021, 4, 20),
+			},
+			expectedErr: nil,
+		},
+		{
+			caseName: "no overlapped",
+			in: DateSpanList{
+				a: MustDateSpan(NewDate(2021, 3, 10), NewDate(2021, 4, 20)),
+				b: MustDateSpan(NewDate(2021, 5, 1), NewDate(2022, 3, 31)),
+			},
+			want:        DateSpan{},
+			expectedErr: NoOverlapToClamp(),
+		},
+	}
+
+	for _, tt := range tests {
+		result, err := tt.in.a.ClampDateSpan(tt.in.b)
+		if err != nil {
+			if !(tt.expectedErr != nil && merrors.ErrorTypeEqual(tt.expectedErr, err)) {
+				t.Errorf("Error occurs in case %v, error: %v", tt.caseName, err)
+			}
+		}
+
+		if !reflect.DeepEqual(result, tt.want) {
+			t.Errorf("result: %v, expected: %v", result, tt.want)
+		}
+
 	}
 }

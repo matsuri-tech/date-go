@@ -15,7 +15,8 @@ type DateSpans []DateSpan
 type DateSpansSlice []DateSpans
 
 const (
-	ErrorInvalidDateSpan merrors.ErrorType = "invalid_date_span"
+	ErrorInvalidDateSpan  merrors.ErrorType = "invalid_date_span"
+	ErrorNoOverlapToClamp merrors.ErrorType = "no_overlap_to_clamp"
 )
 
 func NewDateSpan(StartDate Date, EndDate Date) (DateSpan, error) {
@@ -41,6 +42,10 @@ func MustDateSpan(startDate Date, endDate Date) DateSpan {
 
 func InvalidDateSpan() merrors.CommonError {
 	return merrors.ErrorBadRequest("invalid date span", ErrorInvalidDateSpan)
+}
+
+func NoOverlapToClamp() merrors.CommonError {
+	return merrors.ErrorBadRequest("no overlap to clamp", ErrorNoOverlapToClamp)
 }
 
 func (s DateSpan) GetDateList() Dates {
@@ -87,7 +92,7 @@ func (s DateSpans) Less(i, j int) bool {
 	return s[i].StartDate.IsEarlier(s[j].StartDate)
 }
 
-//重複除去してマージ
+// 重複除去してマージ
 func (s DateSpans) Merge() DateSpans {
 	result := DateSpans{}
 	//StartDate順にソート
@@ -134,4 +139,10 @@ func (s DateSpan) OverlappingYearMonth() YearMonths {
 		currentYearMonth = currentYearMonth.NextMonth()
 	}
 	return result
+}
+
+func (s DateSpan) ClampDateSpan(other DateSpan) (DateSpan, error) {
+	r := DateSpan{}
+
+	return r, nil
 }
