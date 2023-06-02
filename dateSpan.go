@@ -141,8 +141,20 @@ func (s DateSpan) OverlappingYearMonth() YearMonths {
 	return result
 }
 
+// ClampDateSpan 重複している期間を取り出す
 func (s DateSpan) ClampDateSpan(other DateSpan) (DateSpan, error) {
-	r := DateSpan{}
+	if !s.IsOverlapping(other) {
+		return DateSpan{}, NoOverlapToClamp()
+	}
 
-	return r, nil
+	max := s.StartDate.DateDiff(s.EndDate)
+	rl := Dates{}
+	// for文で1つずつチェックしているので、結果をsortしなくて良い。
+	for i := 0; i <= max; i++ {
+		targetDate := s.StartDate.PlusNDay(i)
+		if other.IncludesDate(targetDate) {
+			rl = append(rl, targetDate)
+		}
+	}
+	return MustDateSpan(rl[0], rl[rl.Len()-1]), nil
 }
