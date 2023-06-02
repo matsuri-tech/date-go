@@ -3,6 +3,7 @@ package mdate
 import (
 	"database/sql/driver"
 	"encoding/json"
+	"fmt"
 	"time"
 )
 
@@ -55,6 +56,10 @@ func (d *Date) UnmarshalJSON(data []byte) error {
 
 func (d Date) MarshalJSON() ([]byte, error) {
 	return json.Marshal(d.String())
+}
+
+func (d Date) MarshalText() (text []byte, err error) {
+	return []byte(fmt.Sprintf("%v", d.String())), nil
 }
 
 func (d Date) PlusNDay(n int) Date {

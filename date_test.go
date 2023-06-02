@@ -235,7 +235,7 @@ func TestDate_MarshalJSONInKey(t *testing.T) {
 			in: Sample{
 				day1: day1,
 			},
-			want: []byte("{\"2022-01-01\": \"2022-01-01\"}"),
+			want: []byte("{\"2022-01-01\":\"2022-01-01\"}"),
 		},
 	}
 
