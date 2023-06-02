@@ -59,7 +59,7 @@ func (d Date) MarshalJSON() ([]byte, error) {
 }
 
 func (d Date) MarshalText() (text []byte, err error) {
-	return []byte(fmt.Sprintf("%v", d.String())), nil
+	return []byte(d.String()), nil
 }
 
 func (d Date) PlusNDay(n int) Date {
