@@ -1,6 +1,41 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended"
+  "timezone": "Asia/Tokyo",
+  "extends": ["config:recommended"],
+  "reviewers": ["0num4"],
+  "prConcurrentLimit": 2,
+  "major": {
+    "stabilityDays": 7
+  },
+  "minor": {
+    "stabilityDays": 3
+  },
+  "patch": {
+    "stabilityDays": 1,
+    "automerge": true
+  },
+  "separateMinorPatch": true,
+  "schedule": ["every weekday"],
+  "packageRules": [
+    {
+      "matchDatasources": ["golang-version"],
+      "rangeStrategy": "bump",
+      "automerge": true
+    },
+    {
+      "groupName": "High update frequency and low impact Node packages",
+      "matchPackageNames": ["aws-cdk"],
+      "schedule": ["after 12:00 on Monday"]
+    },
+    {
+      "groupName": "High update frequency and low impact Go packages",
+      "matchPackageNames": [
+        "google.golang.org/api",
+        "golang.org/x/oauth2",
+        "github.com/aws/aws-sdk-go",
+        "github.com/aws/aws-sdk-go/awssdk/v2"
+      ],
+      "schedule": ["after 12:00 on Monday"]
+    }
   ]
 }
