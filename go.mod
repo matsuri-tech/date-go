@@ -1,9 +1,9 @@
 module github.com/matsuri-tech/date-go/v2
 
-go 1.22
+go 1.22.0
 
 require (
-	github.com/matsuri-tech/common-error-go v0.8.0
+	github.com/matsuri-tech/common-error-go v0.8.1
 	github.com/stretchr/testify v1.8.4
 )
 
