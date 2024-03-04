@@ -1,8 +1,9 @@
 package mdate
 
 import (
-	"github.com/matsuri-tech/common-error-go"
 	"sort"
+
+	"github.com/matsuri-tech/common-error-go"
 )
 
 type DateSpan struct {
@@ -49,9 +50,9 @@ func NoOverlapToClamp() merrors.CommonError {
 }
 
 func (s DateSpan) GetDateList() Dates {
-	var dateList = Dates{}
+	dateList := Dates{}
 	ey, em, ed := s.EndDate.Date()
-	var currentDate = s.StartDate
+	currentDate := s.StartDate
 	for {
 		y, m, d := currentDate.Date()
 		dateList = append(dateList, currentDate)
@@ -95,7 +96,7 @@ func (s DateSpans) Less(i, j int) bool {
 // 重複除去してマージ
 func (s DateSpans) Merge() DateSpans {
 	result := DateSpans{}
-	//StartDate順にソート
+	// StartDate順にソート
 	sort.Sort(s)
 	for i, span := range s {
 		if i == 0 {
@@ -130,7 +131,7 @@ func (s DateSpansSlice) Merge() DateSpans {
 
 func (s DateSpan) OverlappingYearMonth() YearMonths {
 	var result YearMonths
-	var currentYearMonth = NewYearMonth(s.StartDate.Year(), s.StartDate.Month())
+	currentYearMonth := NewYearMonth(s.StartDate.Year(), s.StartDate.Month())
 	for {
 		if currentYearMonth.IsAfter(s.EndDate.YearMonth()) {
 			break
