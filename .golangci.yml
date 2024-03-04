@@ -1,0 +1,13 @@
+linters:
+  enable:
+    - gofumpt
+    - durationcheck
+    - forcetypeassert
+    - gocognit
+    - goconst
+    - gocritic
+    - gochecknoglobals
+    - errorlint
+    - exhaustive
+issues:
+  max-same-issues: 0
