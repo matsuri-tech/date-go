@@ -3,6 +3,7 @@ package mdate
 import (
 	"database/sql/driver"
 	"encoding/json"
+	"errors"
 	"time"
 )
 
@@ -111,7 +112,11 @@ func (d Date) String() string {
 
 // for sql driver
 func (d *Date) Scan(value interface{}) error {
-	d.Time = value.(time.Time)
+	v, ok := value.(time.Time)
+	if !ok {
+		return errors.New("value is not a time.Time")
+	}
+	d.Time = v
 	return nil
 }
 
