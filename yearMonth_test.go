@@ -1,6 +1,7 @@
 package mdate
 
 import (
+	"errors"
 	"testing"
 
 	"github.com/matsuri-tech/common-error-go"
@@ -78,13 +79,15 @@ func TestNewMonth(t *testing.T) {
 	for _, tt := range tests {
 		result, err := NewMonth(tt.in)
 		if err != nil {
-			if err.(merrors.CommonError).ErrorType != tt.want.error.(merrors.CommonError).ErrorType {
+			var runErr merrors.CommonError
+			if errors.As(err, &runErr) && !errors.Is(err, tt.want.error) {
 				t.Error(result, tt.want)
 			}
-		} else {
-			if err != tt.want.error {
-				t.Error(result, tt.want)
-			}
+			// if errors.Is(err.(merrors.CommonError), tt.want.error.(merrors.CommonError)) {
+			// 	t.Error(result, tt.want)
+			// }
+		} else if errors.Is(err, tt.want.error) {
+			t.Error(result, tt.want)
 		}
 		if result != tt.want.Month {
 			t.Error(result, tt.want.Month)
