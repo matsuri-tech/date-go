@@ -1,5 +1,4 @@
 linters:
-  # disable-all: true
   enable:
     - gofumpt
     - durationcheck
@@ -10,6 +9,5 @@ linters:
     - gochecknoglobals
     - errorlint
     - exhaustive
-    - funlen
 issues:
   max-same-issues: 0
