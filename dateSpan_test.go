@@ -2,9 +2,10 @@ package mdate
 
 import (
 	"fmt"
-	merrors "github.com/matsuri-tech/common-error-go"
 	"reflect"
 	"testing"
+
+	merrors "github.com/matsuri-tech/common-error-go"
 )
 
 func TestDateSpan_IsContinuous(t *testing.T) {
@@ -47,7 +48,6 @@ func TestDateSpan_IsContinuous(t *testing.T) {
 			t.Error(i, tt)
 		}
 	}
-
 }
 
 func TestDateSpan_IsOverlapping(t *testing.T) {
@@ -99,7 +99,6 @@ func TestDateSpan_IsOverlapping(t *testing.T) {
 }
 
 func TestDateSpan_IncludesDate(t *testing.T) {
-
 	span := MustDateSpan(NewDate(2018, 11, 12), NewDate(2018, 11, 15))
 
 	tests := []struct {
@@ -125,7 +124,6 @@ func TestDateSpan_IncludesDate(t *testing.T) {
 			t.Error(i, tt)
 		}
 	}
-
 }
 
 func TestMerge(t *testing.T) {
@@ -163,7 +161,6 @@ func TestDateSpan_GetDateList(t *testing.T) {
 }
 
 func TestDateSpan_OverlappingYearMonth(t *testing.T) {
-
 	type in struct {
 		okimochi string
 		span     DateSpan

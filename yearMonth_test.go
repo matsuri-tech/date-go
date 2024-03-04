@@ -1,13 +1,13 @@
 package mdate
 
 import (
+	"testing"
+
 	"github.com/matsuri-tech/common-error-go"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestYearMonth_NextMonth(t *testing.T) {
-
 	tests := []struct {
 		in   YearMonth
 		want YearMonth
@@ -111,7 +111,8 @@ func TestYearMonth_IsAfter(t *testing.T) {
 				ym2: YearMonth{
 					Year:  2020,
 					Month: 2,
-				}},
+				},
+			},
 			want: false,
 		},
 		{
@@ -123,7 +124,8 @@ func TestYearMonth_IsAfter(t *testing.T) {
 				ym2: YearMonth{
 					Year:  2020,
 					Month: 2,
-				}},
+				},
+			},
 			want: false,
 		},
 		{
@@ -135,7 +137,8 @@ func TestYearMonth_IsAfter(t *testing.T) {
 				ym2: YearMonth{
 					Year:  2019,
 					Month: 2,
-				}},
+				},
+			},
 			want: true,
 		},
 		{
@@ -147,7 +150,8 @@ func TestYearMonth_IsAfter(t *testing.T) {
 				ym2: YearMonth{
 					Year:  2019,
 					Month: 12,
-				}},
+				},
+			},
 			want: false,
 		},
 	}
@@ -247,7 +251,6 @@ func TestYearMonth_EndDate(t *testing.T) {
 }
 
 func TestMonth_String(t *testing.T) {
-
 	tests := []struct {
 		in   YearMonth
 		want string
