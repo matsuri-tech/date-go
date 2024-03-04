@@ -194,7 +194,6 @@ func TestDate_JapanFiscalYear(t *testing.T) {
 }
 
 func TestDate_MarshalJSON(t *testing.T) {
-
 	type Sample struct {
 		D Date `json:"d"`
 	}
