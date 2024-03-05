@@ -83,9 +83,6 @@ func TestNewMonth(t *testing.T) {
 			if errors.As(err, &runErr) && !errors.Is(err, tt.want.error) {
 				t.Error(result, tt.want)
 			}
-			// if errors.Is(err.(merrors.CommonError), tt.want.error.(merrors.CommonError)) {
-			// 	t.Error(result, tt.want)
-			// }
 		} else if errors.Is(err, tt.want.error) {
 			t.Error(result, tt.want)
 		}
