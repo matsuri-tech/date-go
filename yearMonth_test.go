@@ -78,10 +78,12 @@ func TestNewMonth(t *testing.T) {
 	for _, tt := range tests {
 		result, err := NewMonth(tt.in)
 		if err != nil {
+			//nolint:errorlint,forcetypeassert
 			if err.(merrors.CommonError).ErrorType != tt.want.error.(merrors.CommonError).ErrorType {
 				t.Error(result, tt.want)
 			}
 		} else {
+			//nolint:errorlint
 			if err != tt.want.error {
 				t.Error(result, tt.want)
 			}
