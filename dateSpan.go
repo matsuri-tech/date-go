@@ -20,13 +20,13 @@ const (
 	ErrorNoOverlapToClamp merrors.ErrorType = "no_overlap_to_clamp"
 )
 
-func NewDateSpan(StartDate Date, EndDate Date) (DateSpan, error) {
-	if StartDate.IsLater(EndDate) {
+func NewDateSpan(startDate Date, endDate Date) (DateSpan, error) {
+	if startDate.IsLater(endDate) {
 		return DateSpan{}, InvalidDateSpan()
 	} else {
 		span := DateSpan{
-			StartDate: StartDate,
-			EndDate:   EndDate,
+			StartDate: startDate,
+			EndDate:   endDate,
 		}
 		return span, nil
 	}
