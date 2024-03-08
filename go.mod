@@ -1,6 +1,6 @@
 module github.com/matsuri-tech/date-go/v2
 
-go 1.22.0
+go 1.22.1
 
 require (
 	github.com/matsuri-tech/common-error-go v0.8.1
