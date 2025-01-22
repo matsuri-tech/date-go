@@ -2,7 +2,7 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "timezone": "Asia/Tokyo",
   "extends": ["config:recommended"],
-  "reviewers": ["0num4"],
+  "reviewers": ["hrdtbs"],
   "prConcurrentLimit": 2,
   "major": {
     "stabilityDays": 7
