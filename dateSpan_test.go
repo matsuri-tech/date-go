@@ -354,7 +354,7 @@ func TestClampDateSpan(t *testing.T) {
 	for _, tt := range tests {
 		result, err := tt.in.a.ClampDateSpan(tt.in.b)
 		if err != nil {
-			if !(tt.expectedErr != nil && merrors.ErrorTypeEqual(tt.expectedErr, err)) {
+			if tt.expectedErr == nil || !merrors.ErrorTypeEqual(tt.expectedErr, err) {
 				t.Errorf("Error occurs in case %v, error: %v", tt.caseName, err)
 			}
 		}
