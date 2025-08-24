@@ -4,7 +4,7 @@ go 1.22.0
 
 require (
 	github.com/matsuri-tech/common-error-go v0.8.2
-	github.com/stretchr/testify v1.10.0
+	github.com/stretchr/testify v1.11.0
 )
 
 require (
