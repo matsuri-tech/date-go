@@ -53,6 +53,16 @@
       "schedule": [
         "after 12:00 on Monday"
       ]
+    },
+    {
+      "matchDepTypes": [
+        "action"
+      ],
+      "pinDigests": true,
+      "matchPackageNames": [
+        "!actions/{/,}**",
+        "!matsuri-tech/{/,}**"
+      ]
     }
   ]
 }
