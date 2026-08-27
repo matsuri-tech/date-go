@@ -62,6 +62,14 @@ func (d Date) MarshalText() (text []byte, err error) {
 	return []byte(d.String()), nil
 }
 
+// AppendText shadows the embedded time.Time's AppendText so that encoding/json
+// (Go 1.24+, which prefers encoding.TextAppender over encoding.TextMarshaler
+// for map keys) keeps using Date's short format instead of time.Time's
+// RFC3339 representation.
+func (d Date) AppendText(b []byte) ([]byte, error) {
+	return append(b, d.String()...), nil
+}
+
 func (d Date) PlusNDay(n int) Date {
 	return Date{d.AddDate(0, 0, n)}
 }
