@@ -10,6 +10,8 @@ github.com/matsuri-tech/common-error-go v0.8.1 h1:ur8ZqVlNb+0WzcsK2fpQDBEeYYfUsQ
 github.com/matsuri-tech/common-error-go v0.8.1/go.mod h1:gV61qK6RqFS1pFhhN3pOLG3qcdxALofnQnICC8nI7hs=
 github.com/matsuri-tech/common-error-go v0.8.2 h1:uaRKFuPmnSJ+YhlnWrTCBSDm0wxvJhR7VfLqpVEv1Ks=
 github.com/matsuri-tech/common-error-go v0.8.2/go.mod h1:gV61qK6RqFS1pFhhN3pOLG3qcdxALofnQnICC8nI7hs=
+github.com/matsuri-tech/common-error-go v0.8.3 h1:Uj1Z5KDoD66Hpcy0No5d7ZM33oEdO68AjUe4PJKCC+M=
+github.com/matsuri-tech/common-error-go v0.8.3/go.mod h1:gV61qK6RqFS1pFhhN3pOLG3qcdxALofnQnICC8nI7hs=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
